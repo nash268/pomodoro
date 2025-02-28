@@ -99,7 +99,7 @@ function main() {
 		)}:${String(seconds).padStart(2, "0")}`;
 	}
 
-	function startCountdown(timeInSeconds) {
+	function startCountdown(timeInSeconds, update_bool) {
 		updateTimerDisplay(timeInSeconds);
 		let countdown = setInterval(() => {
 			if (timeInSeconds > 0) {
@@ -108,6 +108,7 @@ function main() {
 			} else {
 				clearInterval(countdown);
 				document.getElementById("timer").textContent = "Finished!";
+                if (!update_bool) return;
 				const currentDayIndex = getCurrentDayIndex();
 				if (currentDayIndex >= 0 && currentDayIndex < totalDays) {
 					if (contributions[currentDayIndex] < 10) {
@@ -128,8 +129,11 @@ function main() {
 
 	const pomoBtn = document.getElementById("pomo-btn");
 	pomoBtn.addEventListener("click", () => {
-		startCountdown(25 * 60);
+		startCountdown(25 * 60, true);
 	});
+    breakBtn.addEventListener("click", () => {
+        startCountdown(5 * 60, false)
+    });
 
 	updateHeatmap();
 }
