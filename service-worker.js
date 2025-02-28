@@ -1,11 +1,12 @@
-const CACHE_NAME = "pomodoro-id-837862";
+const CACHE_NAME = "pomodoro-cache-837862";
+const APP_PREFIX = 'pomodoro_';
 const ASSETS_TO_CACHE = [
     "/",
-    "index.html",
-    "manifest.json",
-    "assets/css/styles.css",
-    "assets/js/app.js",
-    "assets/icons/icon-512x512.png"
+    "/index.html",
+    "/manifest.json",
+    "/assets/css/styles.css",
+    "/assets/js/app.js",
+    "/assets/icons/icon-512x512.png"
 ];
 
 // Install Service Worker and cache assets
