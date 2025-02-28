@@ -13,5 +13,14 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ]
+  ],
+  "screenshots": [
+    {
+     "src": "/pomodoro/assets/icons/icon-512x512.png",
+      "sizes": "1082 × 2402",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "screenshot"
+    }
+]
 }
