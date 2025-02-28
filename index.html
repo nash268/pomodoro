@@ -1,24 +1,36 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pomodoro</title>
-        <link rel="manifest" href="manifest.json">
-        <link rel="stylesheet" href="assets/css/styles.css" type="text/css">
-        <script src="assets/js/app.js"></script>
-    </head>
-    <body>
-        <h1>Pomodoro App</h1>
-        <div class="timer-container">
-            <button id="pomo-btn">start <span>(25 minutues)</span></button>
-            <button id="break-btn" style="margin-left: 10%;">break <span>(5 minutues)</span></button>
-        </div>
-        <div class="timer-container">
-            <div class="timer" id="timer">00:00</div>
-        </div>
-        <div class="heatmap-container">
-            <div class="heatmap" id="heatmap"></div>
-        </div>   
-    </body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Pomodoro</title>
+		<link rel="manifest" href="manifest.json" />
+		<link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
+		<script src="assets/js/app.js"></script>
+	</head>
+	<body>
+		<h1>Pomodoro App</h1>
+		<div class="timer-container">
+			<button id="pomo-btn">start <span>(25 minutues)</span></button>
+			<button id="break-btn" style="margin-left: 10%;">
+				break <span>(5 minutues)</span>
+			</button>
+		</div>
+		<div class="timer-container">
+			<div class="timer" id="timer">00:00</div>
+		</div>
+		<div class="heatmap-container">
+			<div class="heatmap" id="heatmap"></div>
+		</div>
+	</body>
+	<script>
+		if ("serviceWorker" in navigator) {
+			navigator.serviceWorker
+				.register("/service-worker.js")
+				.then(() => console.log("Service Worker Registered"))
+				.catch((error) =>
+					console.log("Service Worker Registration Failed:", error)
+				);
+		}
+	</script>
 </html>

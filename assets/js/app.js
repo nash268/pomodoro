@@ -1,12 +1,3 @@
-if ("serviceWorker" in navigator) {
-	navigator.serviceWorker
-		.register("/service-worker.js")
-		.then(() => console.log("Service Worker Registered"))
-		.catch((error) =>
-			console.log("Service Worker Registration Failed:", error)
-		);
-}
-
 function main() {
 	const heatmap = document.getElementById("heatmap");
 	const breakBtn = document.getElementById("break-btn");
