@@ -44,7 +44,7 @@ function main() {
 			const day = document.createElement("div");
 			day.classList.add("day");
 			if (level > 0) {
-				const clampedLevel = Math.min(level, 4);  // Ensure level never exceeds 4
+				const clampedLevel = Math.min(level, 4); // Ensure level never exceeds 4
 				day.classList.add(`level-${clampedLevel}`);
 			}
 
@@ -114,6 +114,7 @@ function main() {
 								JSON.stringify(contributions)
 							);
 							updateHeatmap();
+                            addXP(10);
 						}
 					} else {
 						console.log("currentDayIndex out of range!");
@@ -144,8 +145,8 @@ function main() {
 				isTimerRunning = false;
 			}
 			currentTimerType = type;
-			remainingTime = type === 'pomo' ? 25 * 60 : 5 * 60;
-			updateOnFinish = type === 'pomo';
+			remainingTime = type === "pomo" ? 5 : 5 ;
+			updateOnFinish = type === "pomo";
 			isTimerRunning = true;
 			startCountdown();
 		}
@@ -153,13 +154,79 @@ function main() {
 
 	const pomoBtn = document.getElementById("pomo-btn");
 	pomoBtn.addEventListener("click", () => {
-		handleTimerClick('pomo');
+		handleTimerClick("pomo");
 	});
 	breakBtn.addEventListener("click", () => {
-		handleTimerClick('break');
+		handleTimerClick("break");
 	});
 
 	updateHeatmap();
+
+	let xp = parseInt(localStorage.getItem("xp")) || 0;
+	let level = parseInt(localStorage.getItem("level")) || 1;
+	let title = localStorage.getItem("title") || "Noob";
+
+	// Function to calculate XP required for the next level
+	function getXPForNextLevel(currentLevel) {
+		return 100 * currentLevel; // Example: Level 1 = 100 XP, Level 2 = 200 XP, etc.
+	}
+
+	// Function to calculate the user's current level based on XP
+	function getLevelFromXP(xp) {
+		let level = 1;
+		let xpNeeded = 100;
+		while (xp >= xpNeeded) {
+			xp -= xpNeeded;
+			level++;
+			xpNeeded = 100 * level;
+		}
+		return level;
+	}
+
+	// Function to get the user's title based on their level
+	function getTitleFromLevel(level) {
+		if (level === 1) return "Noob";
+		if (level >= 2 && level <= 5) return "Beginner";
+		if (level >= 6 && level <= 10) return "Rising Star";
+		if (level >= 11 && level <= 20) return "Master";
+		if (level >= 21) return "Grand Master";
+		return "Noob";
+	}
+
+	// Function to update the XP bar and level info
+	function updateXPBar() {
+		const xpBar = document.getElementById("xp-bar");
+		const currentXP = document.getElementById("current-xp");
+		const nextLevelXP = document.getElementById("next-level-xp");
+		const levelDisplay = document.getElementById("level");
+		const titleDisplay = document.getElementById("title");
+
+		const xpNeededForNextLevel = getXPForNextLevel(level);
+		const progress = (xp / xpNeededForNextLevel) * 100;
+
+		xpBar.style.width = `${progress}%`;
+		currentXP.textContent = xp;
+		nextLevelXP.textContent = xpNeededForNextLevel;
+		levelDisplay.textContent = `Level ${level}`;
+		titleDisplay.textContent = title;
+	}
+
+	// Function to add XP and update level/title
+	function addXP(amount) {
+		xp += amount;
+		const newLevel = getLevelFromXP(xp);
+		if (newLevel > level) {
+			level = newLevel;
+			title = getTitleFromLevel(level);
+			localStorage.setItem("level", level);
+			localStorage.setItem("title", title);
+		}
+		localStorage.setItem("xp", xp);
+		updateXPBar();
+	}
+
+	// Initialize the XP bar on page load
+	updateXPBar();
 }
 
 window.onload = main;
