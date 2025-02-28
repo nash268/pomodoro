@@ -1,7 +1,7 @@
 function main() {
 	const heatmap = document.getElementById("heatmap");
 	const breakBtn = document.getElementById("break-btn");
-	const totalDays = 56 * 7;
+	const totalDays = 21 * 7;
 	let startDate = localStorage.getItem("startDate");
 	if (!startDate) {
 		startDate = new Date();
