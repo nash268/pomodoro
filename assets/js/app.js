@@ -154,11 +154,9 @@ function main() {
 	const pomoBtn = document.getElementById("pomo-btn");
 	pomoBtn.addEventListener("click", () => {
 		handleTimerClick('pomo');
-        pomoBtn.classList.toggle("active-btn");
 	});
 	breakBtn.addEventListener("click", () => {
 		handleTimerClick('break');
-        breakBtn.classList.toggle("active-btn");
 	});
 
 	updateHeatmap();
