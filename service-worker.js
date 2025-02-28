@@ -1,4 +1,4 @@
-const CACHE_NAME = "pomodoro_cache-7618";
+const CACHE_NAME = "pomodoro_cache-32819";
 const APP_PREFIX = "pomodoro_";
 const ASSETS_TO_CACHE = [
     "/pomodoro/",
@@ -7,6 +7,7 @@ const ASSETS_TO_CACHE = [
     "/pomodoro/assets/css/styles.css",
     "/pomodoro/assets/js/app.js",
     "/pomodoro/assets/icons/icon-512x512.png"
+    "/pomodoro/assets/screenshots/screenshot-pixel.png"
 ];
 
 // Install: Cache essential assets
