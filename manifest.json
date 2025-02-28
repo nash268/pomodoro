@@ -9,6 +9,11 @@
   "theme_color": "#ff0000",
   "icons": [
     {
+      "src": "/pomodoro/assets/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
       "src": "/pomodoro/assets/icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
@@ -17,9 +22,9 @@
   "screenshots": [
     {
      "src": "/pomodoro/assets/screenshots/screenshot-pixel.png",
-      "sizes": "1082 × 2402",
+      "sizes": "1082×2402",
       "type": "image/png",
-      "form_factor": "wide",
+      "form_factor": "standard",
       "label": "screenshot"
     }
 ]
