@@ -1,0 +1,4 @@
+{
+  "scripts": ["/assets/js/app.js"],
+  "styles": ["/assets/css/styles.css"]
+}
