@@ -67,7 +67,7 @@ span {
 
 .heatmap {
     display: grid;
-    grid-template-columns: repeat(28, 14px); /* 53 weeks */
+    grid-template-columns: repeat(21, 14px); /* 21 weeks */
     grid-template-rows: repeat(7, 14px); /* 7 days */
     gap: 3px;
     padding: 10px;

@@ -42,7 +42,7 @@ function main() {
 
 	function generateHeatmap() {
 		const heatmap = document.getElementById("heatmap");
-		const totalDays = 28 * 7; // 53 weeks x 7 days
+		const totalDays = 21 * 7; // 21 weeks x 7 days
 
 		for (let i = 0; i < totalDays; i++) {
 			const day = document.createElement("div");
