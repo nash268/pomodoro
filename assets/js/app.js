@@ -9,14 +9,14 @@ if ("serviceWorker" in navigator) {
 
 function main() {
 	const heatmap = document.getElementById("heatmap");
-	const resetBtn = document.getElementById("reset-btn");
+	const breakBtn = document.getElementById("break-btn");
 	const totalDays = 21 * 7;
 	let startDate = localStorage.getItem("startDate");
 	if (!startDate) {
 		startDate = new Date();
 		localStorage.setItem("startDate", startDate.toISOString());
 	} else {
-		startDate = newDate(startDate);
+		startDate = new Date(startDate);
 	}
 	const tooltip = document.createElement("div");
 
@@ -45,7 +45,10 @@ function main() {
 		contributions.forEach((level, index) => {
 			const day = document.createElement("div");
 			day.classList.add("day");
-			if (level > 0) day.classList.add(`level-${level}`);
+            if (level > 0) {
+                const clampedLevel = Math.min(level, 4);  // Ensure level never exceeds 4
+                day.classList.add(`level-${clampedLevel}`);
+            }
 
 			// Store date for tooltip
 			const date = new Date(startDate);
@@ -56,8 +59,8 @@ function main() {
 				tooltip.style.display = "block";
 				tooltip.textContent = `${date.toDateString()}: ${
 					level === 0
-						? "No contributions"
-						: `${level} contribution${level > 1 ? "s" : ""}`
+						? "No Pomodoro"
+						: `${level} Pomodoro${level > 1 ? "s" : ""}`
 				}`;
 			});
 
@@ -85,9 +88,7 @@ function main() {
 
 		updateHeatmap();
 	}
-	resetBtn.addEventListener("click", () => {
-		resetHeatMap();
-	});
+
 
 	function updateTimerDisplay(timeInSeconds) {
 		let minutes = Math.floor(timeInSeconds / 60);
@@ -109,7 +110,7 @@ function main() {
 				document.getElementById("timer").textContent = "Finished!";
 				const currentDayIndex = getCurrentDayIndex();
 				if (currentDayIndex >= 0 && currentDayIndex < totalDays) {
-					if (contributions[currentDayIndex] < 4) {
+					if (contributions[currentDayIndex] < 10) {
 						contributions[currentDayIndex]++;
 						localStorage.setItem(
 							"contributions",
@@ -127,7 +128,7 @@ function main() {
 
 	const pomoBtn = document.getElementById("pomo-btn");
 	pomoBtn.addEventListener("click", () => {
-		startCountdown(5);
+		startCountdown(25 * 60);
 	});
 
 	updateHeatmap();
