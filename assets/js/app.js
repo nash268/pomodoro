@@ -145,7 +145,7 @@ function main() {
 				isTimerRunning = false;
 			}
 			currentTimerType = type;
-			remainingTime = type === "pomo" ? 5 : 5 ;
+			remainingTime = type === "pomo" ? 25 * 60 : 5 * 60;
 			updateOnFinish = type === "pomo";
 			isTimerRunning = true;
 			startCountdown();
