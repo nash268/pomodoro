@@ -20,7 +20,7 @@ button {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-button:hover {
+button:hover, .active-btn {
     background-color: #a32329;
     transform: scale(1.05);
 }

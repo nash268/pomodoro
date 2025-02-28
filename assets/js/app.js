@@ -24,6 +24,13 @@ function main() {
 		JSON.parse(localStorage.getItem("contributions")) ||
 		Array(totalDays).fill(0);
 
+	// Timer state variables
+	let intervalId = null;
+	let currentTimerType = null;
+	let remainingTime = 0;
+	let isTimerRunning = false;
+	let updateOnFinish = false;
+
 	function getCurrentDayIndex() {
 		const today = new Date();
 		return Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
@@ -36,10 +43,10 @@ function main() {
 		contributions.forEach((level, index) => {
 			const day = document.createElement("div");
 			day.classList.add("day");
-            if (level > 0) {
-                const clampedLevel = Math.min(level, 4);  // Ensure level never exceeds 4
-                day.classList.add(`level-${clampedLevel}`);
-            }
+			if (level > 0) {
+				const clampedLevel = Math.min(level, 4);  // Ensure level never exceeds 4
+				day.classList.add(`level-${clampedLevel}`);
+			}
 
 			// Store date for tooltip
 			const date = new Date(startDate);
@@ -68,18 +75,14 @@ function main() {
 		});
 	}
 
-	// Rest heatmap
+	// Reset heatmap
 	function resetHeatMap() {
 		contributions = Array(totalDays).fill(0);
 		localStorage.setItem("contributions", JSON.stringify(contributions));
-
-		// Reset start date to today
 		startDate = new Date();
 		localStorage.setItem("startDate", startDate.toISOString());
-
 		updateHeatmap();
 	}
-
 
 	function updateTimerDisplay(timeInSeconds) {
 		let minutes = Math.floor(timeInSeconds / 60);
@@ -90,41 +93,73 @@ function main() {
 		)}:${String(seconds).padStart(2, "0")}`;
 	}
 
-	function startCountdown(timeInSeconds, update_bool) {
-		updateTimerDisplay(timeInSeconds);
-		let countdown = setInterval(() => {
-			if (timeInSeconds > 0) {
-				timeInSeconds--;
-				updateTimerDisplay(timeInSeconds);
+	function startCountdown() {
+		updateTimerDisplay(remainingTime);
+		intervalId = setInterval(() => {
+			if (remainingTime > 0) {
+				remainingTime--;
+				updateTimerDisplay(remainingTime);
 			} else {
-				clearInterval(countdown);
+				clearInterval(intervalId);
+				intervalId = null;
+				isTimerRunning = false;
 				document.getElementById("timer").textContent = "Finished!";
-                if (!update_bool) return;
-				const currentDayIndex = getCurrentDayIndex();
-				if (currentDayIndex >= 0 && currentDayIndex < totalDays) {
-					if (contributions[currentDayIndex] < 10) {
-						contributions[currentDayIndex]++;
-						localStorage.setItem(
-							"contributions",
-							JSON.stringify(contributions)
-						);
-						updateHeatmap();
+				if (updateOnFinish) {
+					const currentDayIndex = getCurrentDayIndex();
+					if (currentDayIndex >= 0 && currentDayIndex < totalDays) {
+						if (contributions[currentDayIndex] < 20) {
+							contributions[currentDayIndex]++;
+							localStorage.setItem(
+								"contributions",
+								JSON.stringify(contributions)
+							);
+							updateHeatmap();
+						}
+					} else {
+						console.log("currentDayIndex out of range!");
+						resetHeatMap();
 					}
-				} else {
-					console("currentDayIndex out of range!");
-					resetHeatMap();
 				}
+				currentTimerType = null;
 			}
 		}, 1000);
 	}
 
+	function handleTimerClick(type) {
+		if (currentTimerType === type) {
+			// Toggle pause/resume
+			if (isTimerRunning) {
+				// Pause
+				clearInterval(intervalId);
+				isTimerRunning = false;
+			} else {
+				// Resume
+				isTimerRunning = true;
+				startCountdown();
+			}
+		} else {
+			// Switch to different timer type
+			if (isTimerRunning) {
+				clearInterval(intervalId);
+				isTimerRunning = false;
+			}
+			currentTimerType = type;
+			remainingTime = type === 'pomo' ? 25 * 60 : 5 * 60;
+			updateOnFinish = type === 'pomo';
+			isTimerRunning = true;
+			startCountdown();
+		}
+	}
+
 	const pomoBtn = document.getElementById("pomo-btn");
 	pomoBtn.addEventListener("click", () => {
-		startCountdown(25 * 60, true);
+		handleTimerClick('pomo');
+        pomoBtn.classList.toggle("active-btn");
 	});
-    breakBtn.addEventListener("click", () => {
-        startCountdown(5 * 60, false)
-    });
+	breakBtn.addEventListener("click", () => {
+		handleTimerClick('break');
+        breakBtn.classList.toggle("active-btn");
+	});
 
 	updateHeatmap();
 }
