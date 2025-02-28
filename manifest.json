@@ -27,7 +27,7 @@
   "screenshots": [
     {
      "src": "/pomodoro/assets/screenshots/screenshot-pixel.png",
-      "sizes": "1082×2402",
+      "sizes": "1082x2402",
       "type": "image/png",
       "form_factor": "narrow",
       "label": "screenshot"

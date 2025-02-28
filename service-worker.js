@@ -1,4 +1,4 @@
-const CACHE_NAME = "pomodoro_cache-19870163";
+const CACHE_NAME = "pomodoro_cache-289108";
 const APP_PREFIX = "pomodoro_";
 const ASSETS_TO_CACHE = [
     "/pomodoro/",
