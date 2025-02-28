@@ -2,14 +2,14 @@
   "name": "Pomodoro",
   "short_name": "Pomodoro",
   "description": "Pomodoro Productivity App",
-  "scope": "/",
-  "start_url": "index.html",
+  "scope": "/pomodoro/",
+  "start_url": "/pomodoro/",
   "display": "standalone",
   "background_color": "#111111",
   "theme_color": "#ff0000",
   "icons": [
     {
-      "src": "assets/icons/icon-512x512.png",
+      "src": "/pomodoro/assets/icons/icon-512x512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
