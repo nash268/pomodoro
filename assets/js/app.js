@@ -263,7 +263,7 @@ function main() {
 	  // ask for notification permission
 	  Notification.requestPermission().then((result) => {
 		if (result === "granted") {
-		  notification_msg("alert");
+		  console.log("notifications are active");
 		}
 	  });
 	  
