@@ -232,7 +232,6 @@ function main() {
 		console.log(audioUrl);
 		const audio = new Audio(audioUrl);
 		audio.play().catch((e) => console.warn("Audio play failed:", e));
-		notification_msg(currentTimerType);
 	}
 
 	// Function to add XP and update level/title
@@ -248,29 +247,6 @@ function main() {
 		localStorage.setItem("xp", xp);
 		updateXPBar();
 	}
-
-	function notification_msg(currentTimerType) {
-		const notifTitle = "Pomodoro";
-		let notifBody = "Pomodoro Notification";
-		if (currentTimerType == "pomo") {
-			notifBody = "Hell, Yeah!!!";
-		} else if (currentTimerType == "break") {
-			notifBody = "jesse, We need to cook!";
-		}
-		const notifImg = "/pomodoro/assets/icons/icon-192x192.png";
-		const options = {
-		  body: notifBody,
-		  icon: notifImg,
-		};
-		new Notification(notifTitle, options);
-	  }
-	  // ask for notification permission
-	  Notification.requestPermission().then((result) => {
-		if (result === "granted") {
-		  console.log("notifications are active");
-		}
-	  });
-	  
 
 	// Initialize the XP bar on page load
 	updateXPBar();
