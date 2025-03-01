@@ -260,6 +260,12 @@ function main() {
 		};
 		new Notification(notifTitle, options);
 	  }
+	  // ask for notification permission
+	  Notification.requestPermission().then((result) => {
+		if (result === "granted") {
+		  notification_msg("alert");
+		}
+	  });
 	  
 
 	// Initialize the XP bar on page load
@@ -267,11 +273,3 @@ function main() {
 }
 
 window.onload = main;
-
-window.onload = function () {
-	Notification.requestPermission().then((result) => {
-		if (result === "granted") {
-		  notification_msg("alert");
-		}
-	  });
-}
