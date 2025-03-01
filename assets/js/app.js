@@ -94,10 +94,13 @@ function main() {
 	}
 
 	function startCountdown() {
+		const intervalDuration = remainingTime;
+		let startTime = Date.now();
 		updateTimerDisplay(remainingTime);
 		intervalId = setInterval(() => {
-			if (remainingTime > 0) {
-				remainingTime--;
+			let timePassed = Math.floor((Date.now() - startTime)/1000);
+			if (intervalDuration > timePassed) {
+				remainingTime = intervalDuration - timePassed;
 				updateTimerDisplay(remainingTime);
 			} else {
 				clearInterval(intervalId);
