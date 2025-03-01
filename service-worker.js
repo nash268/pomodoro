@@ -9,7 +9,9 @@ const ASSETS_TO_CACHE = [
     "/pomodoro/assets/icons/icon-192x192.png",
     "/pomodoro/assets/icons/icon-256x256.png",
     "/pomodoro/assets/icons/icon-512x512.png",
-    "/pomodoro/assets/screenshots/screenshot-pixel.png"
+    "/pomodoro/assets/screenshots/screenshot-pixel.png",
+    "/pomodoro/assets/audios/breaking-bad-celebration.mp3",
+    "/pomodoro/assets/audios/jesse-time-to-cook.mp3"
 ];
 
 // Install: Cache essential assets

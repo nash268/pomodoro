@@ -1,6 +1,5 @@
 function main() {
 	const heatmap = document.getElementById("heatmap");
-	const breakBtn = document.getElementById("break-btn");
 	const totalDays = 21 * 7;
 	let startDate = localStorage.getItem("startDate");
 	if (!startDate) {
@@ -98,7 +97,7 @@ function main() {
 		let startTime = Date.now();
 		updateTimerDisplay(remainingTime);
 		intervalId = setInterval(() => {
-			let timePassed = Math.floor((Date.now() - startTime)/1000);
+			let timePassed = Math.floor((Date.now() - startTime) / 1000);
 			if (intervalDuration > timePassed) {
 				remainingTime = intervalDuration - timePassed;
 				updateTimerDisplay(remainingTime);
@@ -107,6 +106,7 @@ function main() {
 				intervalId = null;
 				isTimerRunning = false;
 				document.getElementById("timer").textContent = "Finished!";
+				playAlertSound(currentTimerType);
 				if (updateOnFinish) {
 					const currentDayIndex = getCurrentDayIndex();
 					if (currentDayIndex >= 0 && currentDayIndex < totalDays) {
@@ -117,7 +117,7 @@ function main() {
 								JSON.stringify(contributions)
 							);
 							updateHeatmap();
-                            addXP(10);
+							addXP(10);
 						}
 					} else {
 						console.log("currentDayIndex out of range!");
@@ -148,7 +148,7 @@ function main() {
 				isTimerRunning = false;
 			}
 			currentTimerType = type;
-			remainingTime = type === "pomo" ? 25 * 60 : 5 * 60;
+			remainingTime = type === "pomo" ? 5 : 5;
 			updateOnFinish = type === "pomo";
 			isTimerRunning = true;
 			startCountdown();
@@ -156,6 +156,7 @@ function main() {
 	}
 
 	const pomoBtn = document.getElementById("pomo-btn");
+	const breakBtn = document.getElementById("break-btn");
 	pomoBtn.addEventListener("click", () => {
 		handleTimerClick("pomo");
 	});
@@ -212,6 +213,21 @@ function main() {
 		nextLevelXP.textContent = xpNeededForNextLevel;
 		levelDisplay.textContent = `Level ${level}`;
 		titleDisplay.textContent = title;
+	}
+
+	function playAlertSound(currentTimerType) {
+		let audioUrl;
+		if (currentTimerType == "break") {
+			audioUrl = "/pomodoro/assets/audios/jesse-time-to-cook.mp3";
+		} else if (currentTimerType == "pomo") {
+			audioUrl = "/pomodoro/assets/audios/breaking-bad-celebration.mp3";
+		} else {
+			console.warn("Unknown timer type:", currentTimerType);
+			return; // Exit if the timer type is not recognized
+		}
+		console.log(audioUrl);
+		const audio = new Audio(audioUrl);
+		audio.play().catch((e) => console.warn("Audio play failed:", e));
 	}
 
 	// Function to add XP and update level/title
