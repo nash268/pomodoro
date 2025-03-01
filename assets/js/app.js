@@ -107,6 +107,11 @@ function main() {
 				isTimerRunning = false;
 				document.getElementById("timer").textContent = "Finished!";
 				playAlertSound(currentTimerType);
+				if (currentTimerType == "pomo") {
+					addXP(10)
+				} else if (currentTimerType == "break") {
+					addXP(2);
+				};
 				if (updateOnFinish) {
 					const currentDayIndex = getCurrentDayIndex();
 					if (currentDayIndex >= 0 && currentDayIndex < totalDays) {
@@ -117,7 +122,6 @@ function main() {
 								JSON.stringify(contributions)
 							);
 							updateHeatmap();
-							addXP(10);
 						}
 					} else {
 						console.log("currentDayIndex out of range!");
@@ -148,7 +152,7 @@ function main() {
 				isTimerRunning = false;
 			}
 			currentTimerType = type;
-			remainingTime = type === "pomo" ? 25 * 60 : 5 * 60;
+			remainingTime = type === "pomo" ? 25 * 60 : 5 * 60 ;
 			updateOnFinish = type === "pomo";
 			isTimerRunning = true;
 			startCountdown();
