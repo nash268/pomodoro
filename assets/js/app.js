@@ -120,7 +120,7 @@ function main() {
 					addXP(10);
 				} else if (currentTimerType == "break") {
 					addXP(2);
-				};
+				}
 				if (updateOnFinish) {
 					const currentDayIndex = getCurrentDayIndex();
 					if (currentDayIndex >= 0 && currentDayIndex < totalDays) {
@@ -160,7 +160,7 @@ function main() {
 				isTimerRunning = false;
 			}
 			currentTimerType = type;
-			remainingTime = type === "pomo" ? 25 * 60 : 5 * 60 ;
+			remainingTime = type === "pomo" ? 25 * 60 : 5 * 60;
 			updateOnFinish = type === "pomo";
 			isTimerRunning = true;
 			startCountdown();
@@ -217,9 +217,9 @@ function main() {
 		const levelDisplay = document.getElementById("level");
 		const titleDisplay = document.getElementById("title");
 
-		let xpInCurrentLevel = xp ;
+		let xpInCurrentLevel = xp;
 		const xpNeededForNextLevel = getXPForNextLevel(level);
-		for (i=100; i < xpNeededForNextLevel; i+=100) {
+		for (i = 100; i < xpNeededForNextLevel; i += 100) {
 			xpInCurrentLevel -= i;
 		}
 		const progress = (xpInCurrentLevel / xpNeededForNextLevel) * 100;
@@ -233,19 +233,23 @@ function main() {
 	function playAlertSound(currentTimerType) {
 		let audio_to_play;
 		let audioUrls = {
-			"pomo": [
+			pomo: [
 				"/pomodoro/assets/audios/breaking-bad-celebration.mp3",
-				"/pomodoro/assets/audios/hp-level-up-mario.mp3"
+				"/pomodoro/assets/audios/hp-level-up-mario.mp3",
 			],
-			"break":[
+			break: [
 				"/pomodoro/assets/audios/jesse-time-to-cook.mp3",
-				"/pomodoro/assets/audios/family-guy-singing-star-wars.mp3"
-			]
+				"/pomodoro/assets/audios/family-guy-singing-star-wars.mp3",
+			],
 		};
 		if (currentTimerType == "break") {
-			audio_to_play = audioUrls["break"][Math.floor(Math.random() * audioUrls["break"].length)];
+			audio_to_play =
+				audioUrls["break"][
+					Math.floor(Math.random() * audioUrls["break"].length)
+				];
 		} else if (currentTimerType == "pomo") {
-			audio_to_play = audioUrls["pomo"][Math.floor(Math.random() * audioUrls["pomo"].length)];
+			audio_to_play =
+				audioUrls["pomo"][Math.floor(Math.random() * audioUrls["pomo"].length)];
 		} else {
 			console.warn("Unknown timer type:", currentTimerType);
 			return; // Exit if the timer type is not recognized
