@@ -97,6 +97,7 @@ function main() {
 	}
 
 	function startCountdown() {
+		// first check if there are any boxes left
 		if (getCurrentDayIndex() >= totalDays) {
 			console.log("currentIndex out of range.");
 			resetHeatMap();
