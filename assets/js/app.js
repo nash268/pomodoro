@@ -32,7 +32,10 @@ function main() {
 
 	function getCurrentDayIndex() {
 		const today = new Date();
-		return Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+		today.setHours(0, 0, 0, 0);
+		const start = new Date(startDate);
+		start.setHours(0, 0, 0, 0);
+		return Math.floor((today - start) / (1000 * 60 * 60 * 24));
 	}
 
 	function updateHeatmap() {
@@ -108,14 +111,14 @@ function main() {
 				document.getElementById("timer").textContent = "Finished!";
 				playAlertSound(currentTimerType);
 				if (currentTimerType == "pomo") {
-					addXP(10)
+					addXP(10);
 				} else if (currentTimerType == "break") {
 					addXP(2);
 				};
 				if (updateOnFinish) {
 					const currentDayIndex = getCurrentDayIndex();
 					if (currentDayIndex >= 0 && currentDayIndex < totalDays) {
-						if (contributions[currentDayIndex] < 20) {
+						if (contributions[currentDayIndex] < 30) {
 							contributions[currentDayIndex]++;
 							localStorage.setItem(
 								"contributions",
@@ -209,11 +212,14 @@ function main() {
 		const levelDisplay = document.getElementById("level");
 		const titleDisplay = document.getElementById("title");
 
+		let xpInCurrentLevel = xp ;
 		const xpNeededForNextLevel = getXPForNextLevel(level);
-		const progress = (xp / xpNeededForNextLevel) * 100;
-
+		for (i=100; i < xpNeededForNextLevel; i+=100) {
+			xpInCurrentLevel -= i;
+		}
+		const progress = (xpInCurrentLevel / xpNeededForNextLevel) * 100;
 		xpBar.style.width = `${progress}%`;
-		currentXP.textContent = xp;
+		currentXP.textContent = xpInCurrentLevel;
 		nextLevelXP.textContent = xpNeededForNextLevel;
 		levelDisplay.textContent = `Level ${level}`;
 		titleDisplay.textContent = title;
