@@ -1,4 +1,4 @@
-const CACHE_NAME = "pomodoro-cache-313101";
+const CACHE_NAME = "pomodoro-cache-26781";
 const APP_PREFIX = "pomodoro_";
 const ASSETS_TO_CACHE = [
     "/pomodoro/",
@@ -16,56 +16,45 @@ const ASSETS_TO_CACHE = [
     "/pomodoro/assets/audios/hp-level-up-mario.mp3"
 ];
 
-// Install: Cache essential assets
-self.addEventListener("install", (event) => {
+// Install event - cache necessary assets
+self.addEventListener('install', (event) => {
+    console.log('Service Worker: Installing...');
     event.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => {
-            console.log("[Service Worker] Caching assets...");
-            return cache.addAll(ASSETS_TO_CACHE);
-        })
+      caches.open(CACHE_NAME).then((cache) => {
+        console.log('Service Worker: Caching assets');
+        return cache.addAll(ASSETS_TO_CACHE);
+      })
     );
-});
-
-// Activate: Remove old caches and notify about updates
-self.addEventListener("activate", (event) => {
+  });
+  
+  // Activate event - clean up old caches
+  self.addEventListener('activate', (event) => {
+    console.log('Service Worker: Activating...');
     event.waitUntil(
-        caches.keys().then((cacheNames) => {
-            return Promise.all(
-                cacheNames.map((name) => {
-                    if (name.startsWith(APP_PREFIX) && name !== CACHE_NAME) {
-                        console.log(`[Service Worker] Deleting old cache: ${name}`);
-                        return caches.delete(name);
-                    }
-                })
-            );
-        }).then(() => {
-            // Notify clients about the update
-            self.clients.matchAll().then((clients) => {
-                clients.forEach(client => {
-                    client.postMessage({ type: "UPDATE_AVAILABLE" });
-                });
-            });
-        })
+      caches.keys().then((cacheNames) => {
+        return Promise.all(
+          cacheNames.map((cache) => {
+            if (cache !== CACHE_NAME) {
+              console.log('Service Worker: Deleting old cache', cache);
+              return caches.delete(cache);
+            }
+          })
+        );
+      })
     );
-    console.log("[Service Worker] Activated and old caches cleared.");
-});
-
-// Fetch: Network-first strategy
-self.addEventListener("fetch", (event) => {
+  });
+  
+  // Fetch event - serve cached content if offline
+  self.addEventListener('fetch', (event) => {
+    console.log('Service Worker: Fetching', event.request.url);
     event.respondWith(
-        fetch(event.request) // Try to fetch from the network first
-            .then((networkResponse) => {
-                // If the network request is successful, cache the response
-                return caches.open(CACHE_NAME).then((cache) => {
-                    cache.put(event.request, networkResponse.clone());
-                    return networkResponse;
-                });
-            })
-            .catch(() => {
-                // If the network request fails, fall back to the cache
-                return caches.match(event.request).then((cachedResponse) => {
-                    return cachedResponse || new Response("Offline fallback page"); // Provide a fallback if no cache is available
-                });
-            })
+      caches.match(event.request).then((response) => {
+        if (response) {
+          console.log('Service Worker: Serving from cache', event.request.url);
+          return response;
+        }
+        console.log('Service Worker: Fetching from network', event.request.url);
+        return fetch(event.request);
+      })
     );
-});
+  });  
