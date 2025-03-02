@@ -220,17 +220,27 @@ function main() {
 	}
 
 	function playAlertSound(currentTimerType) {
-		let audioUrl;
+		let audio_to_play;
+		let audioUrls = {
+			"pomo": [
+				"/pomodoro/assets/audios/breaking-bad-celebration.mp3",
+				"/pomodoro/assets/audios/hp-level-up-mario.mp3"
+			],
+			"break":[
+				"/pomodoro/assets/audios/jesse-time-to-cook.mp3",
+				"/pomodoro/assets/audios/family-guy-singing-star-wars.mp3"
+			]
+		};
 		if (currentTimerType == "break") {
-			audioUrl = "/pomodoro/assets/audios/jesse-time-to-cook.mp3";
+			audio_to_play = audioUrls["break"][Math.floor(Math.random() * audioUrls["break"].length)];
 		} else if (currentTimerType == "pomo") {
-			audioUrl = "/pomodoro/assets/audios/breaking-bad-celebration.mp3";
+			audio_to_play = audioUrls["pomo"][Math.floor(Math.random() * audioUrls["pomo"].length)];
 		} else {
 			console.warn("Unknown timer type:", currentTimerType);
 			return; // Exit if the timer type is not recognized
 		}
-		console.log(audioUrl);
-		const audio = new Audio(audioUrl);
+		console.log(audio_to_play);
+		const audio = new Audio(audio_to_play);
 		audio.play().catch((e) => console.warn("Audio play failed:", e));
 	}
 

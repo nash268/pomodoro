@@ -1,4 +1,4 @@
-const CACHE_NAME = "pomodoro-cache-24482";
+const CACHE_NAME = "pomodoro-cache-98130";
 const APP_PREFIX = "pomodoro_";
 const ASSETS_TO_CACHE = [
     "/pomodoro/",
@@ -11,7 +11,9 @@ const ASSETS_TO_CACHE = [
     "/pomodoro/assets/icons/icon-512x512.png",
     "/pomodoro/assets/screenshots/screenshot-pixel.png",
     "/pomodoro/assets/audios/breaking-bad-celebration.mp3",
-    "/pomodoro/assets/audios/jesse-time-to-cook.mp3"
+    "/pomodoro/assets/audios/jesse-time-to-cook.mp3",
+    "/pomodoro/assets/audios/family-guy-singing-star-wars.mp3",
+    "/pomodoro/assets/audios/hp-level-up-mario.mp3"
 ];
 
 // Install: Cache essential assets
