@@ -1,4 +1,4 @@
-const CACHE_NAME = "pomodoro-cache-27105";
+const CACHE_NAME = "pomodoro-cache-149104";
 const APP_PREFIX = "pomodoro_";
 const ASSETS_TO_CACHE = [
     "/pomodoro/",
@@ -26,15 +26,25 @@ self.addEventListener("install", (event) => {
     );
 });
 
-// Activate: Remove old caches with the same prefix
+// Activate: Remove old caches and notify about updates
 self.addEventListener("activate", (event) => {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
             return Promise.all(
-                cacheNames
-                    .filter((name) => name.startsWith(APP_PREFIX) && name !== CACHE_NAME)
-                    .map((name) => caches.delete(name))
+                cacheNames.map((name) => {
+                    if (name.startsWith(APP_PREFIX) && name !== CACHE_NAME) {
+                        console.log(`[Service Worker] Deleting old cache: ${name}`);
+                        return caches.delete(name);
+                    }
+                })
             );
+        }).then(() => {
+            // Notify clients about the update
+            self.clients.matchAll().then((clients) => {
+                clients.forEach(client => {
+                    client.postMessage({ type: "UPDATE_AVAILABLE" });
+                });
+            });
         })
     );
     console.log("[Service Worker] Activated and old caches cleared.");
@@ -45,7 +55,6 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(
         caches.match(event.request).then((cachedResponse) => {
             if (cachedResponse) {
-                // Update cache in the background
                 fetch(event.request).then((response) => {
                     return caches.open(CACHE_NAME).then((cache) => {
                         cache.put(event.request, response.clone());
