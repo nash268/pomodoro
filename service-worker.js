@@ -1,4 +1,4 @@
-const CACHE_NAME = "pomodoro-cache-18973";
+const CACHE_NAME = "pomodoro-cache-313101";
 const APP_PREFIX = "pomodoro_";
 const ASSETS_TO_CACHE = [
     "/pomodoro/",
@@ -50,20 +50,22 @@ self.addEventListener("activate", (event) => {
     console.log("[Service Worker] Activated and old caches cleared.");
 });
 
-// Fetch: Serve from cache first, then update in the background
+// Fetch: Network-first strategy
 self.addEventListener("fetch", (event) => {
     event.respondWith(
-        caches.match(event.request).then((cachedResponse) => {
-            if (cachedResponse) {
-                fetch(event.request).then((response) => {
-                    return caches.open(CACHE_NAME).then((cache) => {
-                        cache.put(event.request, response.clone());
-                        return response;
-                    });
+        fetch(event.request) // Try to fetch from the network first
+            .then((networkResponse) => {
+                // If the network request is successful, cache the response
+                return caches.open(CACHE_NAME).then((cache) => {
+                    cache.put(event.request, networkResponse.clone());
+                    return networkResponse;
                 });
-                return cachedResponse;
-            }
-            return fetch(event.request);
-        })
+            })
+            .catch(() => {
+                // If the network request fails, fall back to the cache
+                return caches.match(event.request).then((cachedResponse) => {
+                    return cachedResponse || new Response("Offline fallback page"); // Provide a fallback if no cache is available
+                });
+            })
     );
 });

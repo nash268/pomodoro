@@ -56,25 +56,20 @@
 		</div>
 	</body>
 	<script nonce="ABC123">
+		// Check if the browser supports service workers
 		if ("serviceWorker" in navigator) {
-			navigator.serviceWorker
-				.register("/pomodoro/service-worker.js")
-				.then((registration) => {
-					console.log("[App] Service Worker Registered:", registration);
-				})
-				.catch((error) => {
-					console.error("[App] Service Worker Registration Failed:", error);
-				});
-
-			navigator.serviceWorker.addEventListener("message", (event) => {
-				if (event.data.type === "UPDATE_AVAILABLE") {
-					const userConfirmed = confirm(
-						"A new update is available. Do you want to refresh?"
-					);
-					if (userConfirmed) {
-						window.location.reload();
-					}
-				}
+			window.addEventListener("load", () => {
+				navigator.serviceWorker
+					.register("/pomodoro/service-worker.js") // Path to your service worker file
+					.then((registration) => {
+						console.log(
+							"Service Worker registered with scope:",
+							registration.scope
+						);
+					})
+					.catch((error) => {
+						console.error("Service Worker registration failed:", error);
+					});
 			});
 		}
 	</script>
