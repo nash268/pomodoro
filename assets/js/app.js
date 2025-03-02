@@ -84,6 +84,7 @@ function main() {
 		startDate = new Date();
 		localStorage.setItem("startDate", startDate.toISOString());
 		updateHeatmap();
+		console.log("heatmap reset");
 	}
 
 	function updateTimerDisplay(timeInSeconds) {
@@ -96,6 +97,10 @@ function main() {
 	}
 
 	function startCountdown() {
+		if (getCurrentDayIndex() >= totalDays) {
+			console.log("currentIndex out of range.");
+			resetHeatMap();
+		}
 		const intervalDuration = remainingTime;
 		let startTime = Date.now();
 		updateTimerDisplay(remainingTime);
@@ -128,7 +133,6 @@ function main() {
 						}
 					} else {
 						console.log("currentDayIndex out of range!");
-						resetHeatMap();
 					}
 				}
 				currentTimerType = null;
