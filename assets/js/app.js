@@ -219,7 +219,7 @@ function main() {
 
 		let xpInCurrentLevel = xp;
 		const xpNeededForNextLevel = getXPForNextLevel(level);
-		for (i = 100; i < xpNeededForNextLevel; i += 100) {
+		for (let i = 100; i < xpNeededForNextLevel; i += 100) {
 			xpInCurrentLevel -= i;
 		}
 		const progress = (xpInCurrentLevel / xpNeededForNextLevel) * 100;
