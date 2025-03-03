@@ -1,4 +1,4 @@
-const CACHE_NAME = "pomodoro-cache-247194";
+const CACHE_NAME = "pomodoro-cache-578201";
 const APP_PREFIX = "pomodoro_";
 const ASSETS_TO_CACHE = [
 	"/pomodoro/",
@@ -9,7 +9,6 @@ const ASSETS_TO_CACHE = [
 	"/pomodoro/assets/icons/icon-192x192.png",
 	"/pomodoro/assets/icons/icon-256x256.png",
 	"/pomodoro/assets/icons/icon-512x512.png",
-	"/pomodoro/assets/screenshots/screenshot-pixel.png",
 	"/pomodoro/assets/audios/breaking-bad-celebration.mp3",
 	"/pomodoro/assets/audios/jesse-time-to-cook.mp3",
 	"/pomodoro/assets/audios/family-guy-singing-star-wars.mp3",
