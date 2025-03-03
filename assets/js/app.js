@@ -255,7 +255,7 @@ function main() {
 			return; // Exit if the timer type is not recognized
 		}
 		console.log(audio_to_play);
-		navigator.vibrate(200);
+		window.navigator.vibrate([200,100,200]);
 		const audio = new Audio(audio_to_play);
 		audio.play().catch((e) => console.warn("Audio play failed:", e));
 	}
