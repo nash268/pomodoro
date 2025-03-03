@@ -26,11 +26,32 @@
   ],
   "screenshots": [
     {
-     "src": "/pomodoro/assets/screenshots/screenshot-pixel.png",
+      "src": "/pomodoro/assets/screenshots/screenshot-pixel.png",
       "sizes": "1082x2402",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "screenshot"
+      "label": "Application"
+    },
+    {
+      "src": "/pomodoro/assets/screenshots/screenshot(iPhone SE).png",
+      "sizes": "750x1333",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Application"
+    },
+    {
+      "src": "/pomodoro/assets/screenshots/Screenshot-wide-1.png",
+      "sizes": "1366x768",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Application"
+    },
+    {
+      "src": "/pomodoro/assets/screenshots/Screenshot-wide-2.png",
+      "sizes": "1366x768",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Application"
     }
-]
+  ]
 }
