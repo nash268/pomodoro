@@ -38,6 +38,37 @@ function main() {
 		return Math.floor((today - start) / (1000 * 60 * 60 * 24));
 	}
 
+	// The wake lock sentinel.
+	let wakeLock = null;
+	// Function that attempts to request a screen wake lock.
+	const requestWakeLock = async () => {
+		if (wakeLock) return;
+		try {
+			wakeLock = await navigator.wakeLock.request();
+			console.log("wake lock active: ", wakeLock);
+			wakeLock.addEventListener("release", () => {
+				console.log("Screen Wake Lock released:", wakeLock.released);
+			});
+		} catch (err) {
+			console.error(`${err.name}, ${err.message}`);
+		}
+	};
+
+	// Function to release wake lock
+	const releaseWakeLock = function () {
+		if (wakeLock) {
+			wakeLock.release();
+			wakeLock = null;
+		}
+	};
+
+	// Re-acquire wake lock when the page becomes visible
+	document.addEventListener("visibilitychange", async () => {
+		if (document.visibilityState === "visible" && isTimerRunning) {
+			await requestWakeLock();
+		}
+	});
+
 	function updateHeatmap() {
 		heatmap.innerHTML = "";
 		const currentDayIndex = getCurrentDayIndex();
@@ -102,6 +133,10 @@ function main() {
 			console.log("currentIndex out of range.");
 			resetHeatMap();
 		}
+
+		// Prevent screen from turning off
+		requestWakeLock();
+
 		const intervalDuration = remainingTime;
 		let startTime = Date.now();
 		updateTimerDisplay(remainingTime);
@@ -137,6 +172,7 @@ function main() {
 					}
 				}
 				currentTimerType = null;
+				releaseWakeLock();
 			}
 		}, 1000);
 	}
@@ -255,7 +291,7 @@ function main() {
 			return; // Exit if the timer type is not recognized
 		}
 		console.log(audio_to_play);
-		window.navigator.vibrate([200,100,200]);
+		window.navigator.vibrate([200, 100, 200]);
 		const audio = new Audio(audio_to_play);
 		audio.play().catch((e) => console.warn("Audio play failed:", e));
 	}
