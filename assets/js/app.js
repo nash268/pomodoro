@@ -42,7 +42,6 @@ function main() {
 	let wakeLock = null;
 	// Function that attempts to request a screen wake lock.
 	const requestWakeLock = async () => {
-		if (wakeLock) return;
 		try {
 			wakeLock = await navigator.wakeLock.request();
 			console.log("wake lock active: ", wakeLock);
