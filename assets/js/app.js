@@ -83,11 +83,13 @@ function main() {
 			// Store date for tooltip
 			const date = new Date(startDate);
 			date.setDate(date.getDate() + index);
+			const dateString = date.toDateString().split(" ");
+			const dayMonth = `${dateString[0]} ${dateString[1]} ${dateString[2]}`;
 
 			// Hover effects
 			day.addEventListener("mouseenter", (e) => {
 				tooltip.style.display = "block";
-				tooltip.textContent = `${date.toDateString()}: ${
+				tooltip.textContent = `${dayMonth}: ${
 					level === 0
 						? "No Pomodoro"
 						: `${level} Pomodoro${level > 1 ? "s" : ""}`
@@ -126,6 +128,12 @@ function main() {
 		)}:${String(seconds).padStart(2, "0")}`;
 	}
 
+	// nature sound for the countdown
+	const natureSound = new Audio(
+		"/pomodoro/assets/audios/nature-sounds-water-forest-crick.mp3"
+	);
+	natureSound.loop = true;
+
 	function startCountdown() {
 		// first check if there are any boxes left
 		if (getCurrentDayIndex() >= totalDays) {
@@ -135,6 +143,10 @@ function main() {
 
 		// Prevent screen from turning off
 		requestWakeLock();
+		// play nature sound
+		natureSound.play().catch((e) => {
+			console.warn("natureSound didn't play", e);
+		});
 
 		const intervalDuration = remainingTime;
 		let startTime = Date.now();
@@ -172,6 +184,9 @@ function main() {
 				}
 				currentTimerType = null;
 				releaseWakeLock();
+				// stop nature sound
+				natureSound.pause();
+				natureSound.currentTime = 0;
 			}
 		}, 1000);
 	}
@@ -183,6 +198,8 @@ function main() {
 				// Pause
 				clearInterval(intervalId);
 				isTimerRunning = false;
+				natureSound.pause();
+				natureSound.currentTime = 0;
 			} else {
 				// Resume
 				isTimerRunning = true;

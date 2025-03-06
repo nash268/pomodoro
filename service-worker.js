@@ -1,4 +1,4 @@
-const CACHE_NAME = "pomodoro-cache-120382";
+const CACHE_NAME = "pomodoro-cache-9271145";
 const APP_PREFIX = "pomodoro_";
 const ASSETS_TO_CACHE = [
 	"/pomodoro/",
@@ -13,6 +13,7 @@ const ASSETS_TO_CACHE = [
 	"/pomodoro/assets/audios/jesse-time-to-cook.mp3",
 	"/pomodoro/assets/audios/family-guy-singing-star-wars.mp3",
 	"/pomodoro/assets/audios/hp-level-up-mario.mp3",
+	"/pomodoro/assets/audios/nature-sounds-water-forest-crick.mp3",
 ];
 
 // Install event - cache necessary assets
