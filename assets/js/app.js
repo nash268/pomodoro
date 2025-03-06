@@ -129,8 +129,12 @@ function main() {
 	}
 
 	// nature sound for the countdown
+	const natureSoundUrls = [
+		"/pomodoro/assets/audios/nature-sounds-water-forest-crick.mp3",
+		"/pomodoro/assets/audios/prime-facts7-nature-sound-birds.mp3",
+	];
 	const natureSound = new Audio(
-		"/pomodoro/assets/audios/nature-sounds-water-forest-crick.mp3"
+		natureSoundUrls[Math.floor(Math.random() * natureSoundUrls.length)]
 	);
 	natureSound.loop = true;
 
