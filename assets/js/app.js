@@ -370,21 +370,17 @@ function main() {
 				reader.onload = function (event) {
 					try {
 						const data = JSON.parse(event.target.result);
-						const confirmImport = confirm(
-							"This will overwrite existing Pomodoro data. Proceed?"
-						);
-						if (!confirmImport) return;
+						if (!confirm("This will overwrite your current data. Continue?"))
+							return;
 
 						for (const key in data) {
-							if (key.startsWith(APP_PREFIX)) {
-								localStorage.setItem(key, data[key]);
-							}
+							localStorage.setItem(key, data[key]);
 						}
 
-						alert("Pomodoro data imported successfully. Reloading...");
+						alert("Data imported successfully! Reloading...");
 						location.reload();
 					} catch (err) {
-						alert("Failed to import: Invalid JSON or corrupted file.");
+						alert("Failed to import: Invalid JSON file.");
 					}
 				};
 				reader.readAsText(file);
