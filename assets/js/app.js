@@ -289,19 +289,13 @@ function main() {
 	function playAlertSound(currentTimerType) {
 		let audio_to_play;
 		let audioUrls = {
-			pomo: [
-				"/pomodoro/assets/audios/hp-level-up-mario.mp3",
-			],
-			break: [
-				"/pomodoro/assets/audios/family-guy-singing-star-wars.mp3",
-			],
+			pomo: ["/pomodoro/assets/audios/hp-level-up-mario.mp3"],
+			break: ["/pomodoro/assets/audios/family-guy-singing-star-wars.mp3"],
 		};
 		if (currentTimerType == "break") {
-			audio_to_play =
-				audioUrls["break"][0];
+			audio_to_play = audioUrls["break"][0];
 		} else if (currentTimerType == "pomo") {
-			audio_to_play =
-				audioUrls["pomo"][0];
+			audio_to_play = audioUrls["pomo"][0];
 		} else {
 			console.warn("Unknown timer type:", currentTimerType);
 			return; // Exit if the timer type is not recognized
@@ -329,13 +323,69 @@ function main() {
 	// Initialize the XP bar on page load
 	updateXPBar();
 
-	(function mainMenu (){
-		const menu_btn = document.getElementById('menu-btn');
-		const main_menu = document.getElementById('main-menu');
+	(function mainMenu() {
+		const menu_btn = document.getElementById("menu-btn");
+		const main_menu = document.getElementById("main-menu");
 
-		menu_btn.addEventListener('click', () => {
+		menu_btn.addEventListener("click", () => {
 			main_menu.classList.toggle("hidden");
-		})
+		});
+	})();
+
+	(function importExport() {
+		const APP_PREFIX = "pomodoro_"; // change if you're using a different prefix
+
+		document.getElementById("export-btn").addEventListener("click", () => {
+			const exportData = {};
+			for (const key in localStorage) {
+				if (key.startsWith(APP_PREFIX)) {
+					exportData[key] = localStorage.getItem(key);
+				}
+			}
+
+			const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+				type: "application/json",
+			});
+
+			const url = URL.createObjectURL(blob);
+			const a = document.createElement("a");
+			a.href = url;
+			a.download = `pomodoro-backup-${
+				new Date().toISOString().split("T")[0]
+			}.json`;
+			a.click();
+			URL.revokeObjectURL(url);
+		});
+
+		document
+			.getElementById("import-file")
+			.addEventListener("change", function () {
+				const file = this.files[0];
+				if (!file) return;
+
+				const reader = new FileReader();
+				reader.onload = function (event) {
+					try {
+						const data = JSON.parse(event.target.result);
+						const confirmImport = confirm(
+							"This will overwrite existing Pomodoro data. Proceed?"
+						);
+						if (!confirmImport) return;
+
+						for (const key in data) {
+							if (key.startsWith(APP_PREFIX)) {
+								localStorage.setItem(key, data[key]);
+							}
+						}
+
+						alert("Pomodoro data imported successfully. Reloading...");
+						location.reload();
+					} catch (err) {
+						alert("Failed to import: Invalid JSON or corrupted file.");
+					}
+				};
+				reader.readAsText(file);
+			});
 	})();
 }
 

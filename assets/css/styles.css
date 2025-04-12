@@ -9,7 +9,7 @@ h1 {
     text-align: center;
 }
 
-button {
+button, .button {
     background-color: #da3039;
     color: white;
     padding: 10px 20px;
@@ -20,7 +20,7 @@ button {
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-button:hover {
+button:hover, .button:hover {
     background-color: #a32329;
     transform: scale(1.05);
 }

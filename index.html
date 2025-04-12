@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta
 			http-equiv="Content-Security-Policy"
-			content="script-src 'self' https://nash268.github.io https://www.gstatic.com https://www.googletagmanager.com 'nonce-ABC123'; worker-src 'self';"
+			content="script-src 'self' https://nash268.github.io 'nonce-ABC123'; worker-src 'self';"
 		/>
 		<title>Pomodoro</title>
 		<link
@@ -28,7 +28,6 @@
 		/>
 		<link rel="manifest" href="manifest.json" crossorigin="use-credentials" />
 		<link rel="stylesheet" href="assets/css/styles.css" type="text/css" />
-		<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css" />
 		<script src="assets/js/app.js"></script>
 	</head>
 	<body>
@@ -37,8 +36,13 @@
 		</div>
 		<h1>Pomodoro App</h1>
 		<div id="main-menu" class="hidden">
-			<div id="firebaseui-auth-container"></div>
-			<div id="loader">Loading...</div>
+			<div class="flex gap-2 mt-4">
+				<button id="export-btn">Export</button>
+				<label class="button">
+				  Import
+				  <input type="file" id="import-file" accept=".json" class="hidden">
+				</label>
+			  </div>			  
 		</div>
 		<div class="timer-container">
 			<button id="pomo-btn">start <span>(25 minutues)</span></button>
@@ -62,7 +66,6 @@
 		<div id="xp-info">
 			<span id="current-xp">0</span> / <span id="next-level-xp">100</span> XP
 		</div>
-		<script type="module" src="assets/js/firebase.js"></script>
 	</body>
 	<script nonce="ABC123">
 		// Check if the browser supports service workers
