@@ -5,7 +5,6 @@ import {
 	EmailAuthProvider,
 } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
 import * as firebaseui from "https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.js";
-import "https://www.gstatic.com/firebasejs/ui/6.0.1/firebase-ui-auth.css";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyDr1MLlIMbJyi36DWBxMlL_z8BN760TOHE",
