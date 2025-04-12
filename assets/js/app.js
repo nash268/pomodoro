@@ -290,22 +290,18 @@ function main() {
 		let audio_to_play;
 		let audioUrls = {
 			pomo: [
-				"/pomodoro/assets/audios/breaking-bad-celebration.mp3",
 				"/pomodoro/assets/audios/hp-level-up-mario.mp3",
 			],
 			break: [
-				"/pomodoro/assets/audios/jesse-time-to-cook.mp3",
 				"/pomodoro/assets/audios/family-guy-singing-star-wars.mp3",
 			],
 		};
 		if (currentTimerType == "break") {
 			audio_to_play =
-				audioUrls["break"][
-					Math.floor(Math.random() * audioUrls["break"].length)
-				];
+				audioUrls["break"][0];
 		} else if (currentTimerType == "pomo") {
 			audio_to_play =
-				audioUrls["pomo"][Math.floor(Math.random() * audioUrls["pomo"].length)];
+				audioUrls["pomo"][0];
 		} else {
 			console.warn("Unknown timer type:", currentTimerType);
 			return; // Exit if the timer type is not recognized
