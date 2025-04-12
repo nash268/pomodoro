@@ -333,14 +333,17 @@ function main() {
 	})();
 
 	(function importExport() {
-		const APP_PREFIX = "pomodoro_"; // change if you're using a different prefix
-
 		document.getElementById("export-btn").addEventListener("click", () => {
 			const exportData = {};
-			for (const key in localStorage) {
-				if (key.startsWith(APP_PREFIX)) {
-					exportData[key] = localStorage.getItem(key);
-				}
+
+			for (let i = 0; i < localStorage.length; i++) {
+				const key = localStorage.key(i);
+				exportData[key] = localStorage.getItem(key);
+			}
+
+			if (Object.keys(exportData).length === 0) {
+				alert("No data found in localStorage.");
+				return;
 			}
 
 			const blob = new Blob([JSON.stringify(exportData, null, 2)], {
