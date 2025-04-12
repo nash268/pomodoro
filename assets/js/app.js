@@ -328,6 +328,15 @@ function main() {
 
 	// Initialize the XP bar on page load
 	updateXPBar();
+
+	(function mainMenu (){
+		const menu_btn = document.getElementById('menu-btn');
+		const main_menu = document.getElementById('main-menu');
+
+		menu_btn.addEventListener('click', () => {
+			main_menu.classList.toggle("hidden");
+		})
+	})();
 }
 
 window.onload = main;
